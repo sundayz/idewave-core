@@ -2,7 +2,7 @@ import argparse
 
 from DB.CreateDB import create_db, create_tables
 from DB.DropDB import drop_db
-from DB.Fixtures.Loader.load_world_data import load_world_data
+from DB.Fixtures.Loader.fixture_loaders import WorldFixtureLoader
 
 from Account.AccountManager import AccountManager
 from World.Object.Item.ItemManager import ItemManager
@@ -45,14 +45,16 @@ def process():
             Logger.notify('DB was successfully re-created')
 
         elif subcommand == 'load_data':
-            load_world_data()
+            loader = WorldFixtureLoader()
+            loader.load_data()
 
         elif subcommand == 'recreate_with_load':
             drop_db()
             create_db()
             create_tables()
             Logger.notify('DB was successfully re-created')
-            load_world_data()
+            loader = WorldFixtureLoader()
+            loader.load_data()
 
 
     # accounts
